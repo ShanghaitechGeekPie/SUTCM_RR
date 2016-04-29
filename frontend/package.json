@@ -24,6 +24,9 @@
   "pre-commit": [
     "lint"
   ],
+  "theme": {
+    "primary-color": "#a41f34"
+  },
   "scripts": {
     "start": "npm run dev",
     "dev": "dora -p 8001 --plugins webpack,proxy,hmr",

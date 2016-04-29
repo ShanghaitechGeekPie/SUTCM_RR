@@ -1,0 +1,47 @@
+body {
+    background: url("../image/bg.jpg") 50% 0px no-repeat scroll #fffcf3;
+    padding-top: 120px;
+    height: 100%;
+}
+#foot {
+    background: url("../image/foot.jpg") 50% 0px no-repeat scroll #fffcf3;
+    margin-top: -40px;
+    padding-top: 50px;
+    height: 94px;
+    text-align: center;
+    color: #fce7b2;
+}
+#main-content {
+    width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+}
+#Breadcrumbs {
+    margin: 0px 0px 20px 0px;
+}
+#Indexes {
+    text-align: center;
+}
+#Indexes > button {
+    width: 120px;
+    height: 120px;
+    padding: 20px;
+    margin: 30px;
+}
+#Indexes > button > i {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+#ReserveSteps {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.card {
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    background-color: #fefefe;
+    min-height: 300px;
+    border-radius: 2px;
+    padding: 20px 30px 80px 30px;
+}
