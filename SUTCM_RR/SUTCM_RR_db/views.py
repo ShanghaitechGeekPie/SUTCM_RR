@@ -5,16 +5,18 @@ from django.utils.crypto import get_random_string
 
 from .models import Provider, Resource, Reservation
 
+
 class ResourcesList(View):
 	def get(self, request, category_id):
-        resource_objects = Resource.objects.get(category = category_id)
-		resources_json = JsonResponse({'resource_list': resource_objects})
-		return resources_json
+		resource_objects = Resource.objects.get(category = category_id)
+		return JsonResponse({'resource_list': resource_objects})
+
 
 class ResourceInfo(View):
 	def get(self, request, resource_id):
 		resource_object = Resource.objects.get(pk = resource_id)[0]
 		return JsonResponse({'resource': resource_object})
+
 
 class TimeCheck(View):
 	def get(request, resource_id, time_from, time_to):
@@ -60,6 +62,7 @@ class Reserve(View):
 		except Exception as e:
 			return JsonResponse({'success': 0, 'errmsg': e})
 		return JsonResponse({'success': 1, 'reserve_sn': reserve_sn})
+
 
 class Result(View):
 	def get(request, reserve_sn):
