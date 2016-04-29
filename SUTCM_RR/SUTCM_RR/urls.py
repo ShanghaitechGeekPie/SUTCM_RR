@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from SUTCM_RR_db import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^resources/(?P<category_id>\d{1})/$', views.ResourcesList),
+    url(r'^resource/(?P<resource_id>\d+)/$', views.ResourceInfo),
+    url(r'^time/(?P<from>\d+)/(?P<to>\d+)/$', views.time_check),
+    url(r'^reserve/.../$', views.article_detail),
+    url(r'^result/(?P<reserve_sn>\d|\w{6})/$', views.result)
 ]

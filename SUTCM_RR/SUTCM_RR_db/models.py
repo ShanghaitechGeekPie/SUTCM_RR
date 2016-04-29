@@ -19,6 +19,9 @@ class Resource(models.Model):
 	capacity = models.PositiveSmallIntegerField(verbose_name = '最大容纳人数')
 	description = models.TextField(blank = True, verbose_name = '简介')
 	provider = models.ForeignKey(Provider, verbose_name = '负责人')
+
+	time_open_begin = models.DateTimeField(verbose_name = '开放时间')
+	time_open_end = models.DateTimeField(verbose_name = '结束时间')
 	#? Photo and other static resources
 
 
@@ -39,11 +42,7 @@ class Reservation(models.Model):
 	# null for pending, True for accepted, False for rejected.
 	status = models.NullBooleanField(default = None)
 	purpose = models.CharField(max_length = 50, blank = True, verbose_name = '申请用途')
-	''' switch(resource.category)
-		case room: duration should be 30, 60, 90, ..., 240 min.s and starts from XX:00 or XX:30
-		case consultation: no specific constraint
-	availability_check: begin2 < end1 && end2 > begin1
-	'''
+	
 	time_begin = models.DateTimeField(verbose_name = '开始时间')
 	time_end = models.DateTimeField(verbose_name = '结束时间')
 

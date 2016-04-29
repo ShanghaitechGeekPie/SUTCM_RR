@@ -1,16 +1,21 @@
+from django.views.generic import View
+
 from django.http import JsonResponse
+from django.utils.crypto import get_random_string
 
 from .models import Provider, Resource, Reservation
 
-def resource_list(request):
-	resource_objects = Resource.objects
-	resources_json = JsonResponse({'resource_list': resource_objects})
-	return resources_json
+class ResourceList(View):
+    def get(self, request, category_id):
+        resource_objects = Resource.objects.get(category = category_id)
+		resources_json = JsonResponse({'resource_list': resource_objects})
+		return resources_json
 
-def resource(request, id):
-	resource
-	resource_json = JsonResponse()
-	return resource_json
+class ResourceInfo(request, id):
+	def get(self, request, *args, **kwargs):
+		resource
+		resource_json = JsonResponse()
+		return resource_json
 
 def time_check(request, resource_id, time):
 	reservation_records = Reservation.objects.get(resource = resource_id)
@@ -25,10 +30,21 @@ def time_check(request, resource_id, time):
 		return JsonResponse({'time_available': 2})
 	return JsonResponse({'time_available': 1})
 
+
 def reserve(request, type):
-	if succeeded:
-		reservation_response = JsonResponse({'success': 1, 'reserve_sn': reserve_sn})
-	return reservation_response
+	# Get Reservation Serial Number
+	snGenCount = 0
+	maxRetry = 5
+	while True:
+		reserve_sn = get_random_string(length = 6)
+		loopContinueFlag += 1
+		if not Reservation.objects.get(sn = reserve_sn).exists():
+			break
+		if snGenCount > maxRetry:
+			return JsonResponse({'errmsg': 'reservation serial number generation failed.'})
+	# Write into database
+
+	return JsonResponse({'success': 1, 'reserve_sn': reserve_sn})
 
 
 def result(request, reserve_sn):
