@@ -33,7 +33,7 @@ class TimeCheck(View):
 
 class Reserve(View):
 	def post(request):
-		# Get Reservation Serial Number
+		# Reservation serial number generation
 		snGenCount = 0
 		maxRetry = 5
 		while True:
@@ -43,12 +43,12 @@ class Reserve(View):
 				break
 			if snGenCount > maxRetry:
 				return JsonResponse({'success': 0, 'errmsg': 'reservation serial number generation failed.'})
-		# TODO Write into database
+		# Write into database
 		reservation = Reservation(
 			sn = reserve_sn,
 			applicant_phone = int(request.POST['applicant_phone']),
 			applicant_name = request.POST['applicant_name'],
-			applicant_department = int(applicant_name = request.POST['applicant_department']),
+			applicant_department = int(request.POST['applicant_department']),
 			applicant_sid = int(request.POST['applicant_sid']),
 			resource = int(request.POST['resource_id']),
 			purpose = request.POST['purpose'],
@@ -57,7 +57,7 @@ class Reserve(View):
 		)
 		try:
 			reservation.save()
-		except Exception, e:
+		except Exception as e:
 			return JsonResponse({'success': 0, 'errmsg': e})
 		return JsonResponse({'success': 1, 'reserve_sn': reserve_sn})
 
