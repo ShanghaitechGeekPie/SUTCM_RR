@@ -5,6 +5,7 @@ from django.utils.crypto import get_random_string
 
 from .models import Provider, Resource, Reservation
 
+import datetime
 
 class ResourcesList(View):
 	def get(self, request, category_id):
@@ -19,9 +20,14 @@ class ResourceInfo(View):
 
 
 class TimeCheck(View):
-	def get(request, resource_id, time_from, time_to):
-		reservation_records = Reservation.objects.get(resource = resource_id)
+	def get(request, resource_id, begin_at, duration):
+		time_begin = datetime.datetime.strptime(begin_at, '')
+		time_end = datetime.datetime.strptime(begin_at, '') + datetime.datetime.timedelta(minutes = int(duration) * 30)
+		# [REF]https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
+
+		reservation_records = Reservation.objects.get(resource = resource_id, time_begin )
 		may_not_available = False
+
 		for record in reservation_records:
 			if record.time_begin < time_to and record.time_end > time_from:
 				if record.status = True:
