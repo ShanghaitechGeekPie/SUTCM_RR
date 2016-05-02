@@ -20,14 +20,19 @@ class Resource(models.Model):
 	description = models.TextField(blank = True, verbose_name = '简介')
 	provider_name = models.CharField(max_length = 20, verbose_name = '负责人')
 
-	open_hours = models.CharField(verbose_name = '开放时间')
+	open_hours = models.CharField(max_length = 50, verbose_name = '开放时间')
 	#? Photo and other static resources
+
+	class Meta:
+		verbose_name = '资源'
+		verbose_name_plural = '资源'
 
 
 class Reservation(models.Model):
 # parameters and data
 	DEPARTMENT_CHOICES = (
-		(0,'A学院')
+		(0, 'A学院'),
+		(1, 'B学院')
 	)
 
 # model field definitions
@@ -46,3 +51,7 @@ class Reservation(models.Model):
 	time_end = models.DateTimeField(verbose_name = '结束时间')
 
 	sn = models.CharField(unique = True, max_length = 5, verbose_name = '查询代码')
+
+	class Meta:
+		verbose_name = '预约'
+		verbose_name_plural = '预约'

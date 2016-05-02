@@ -1,0 +1,1 @@
+default_app_config = 'SUTCM_RR_db.apps.SutcmRrDbConfig'
