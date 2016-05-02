@@ -23,14 +23,15 @@ body {
 }
 #Indexes {
     text-align: center;
+    padding-bottom: 50px;
 }
-#Indexes > button {
+#Indexes > a > button {
     width: 120px;
     height: 120px;
     padding: 20px;
     margin: 30px;
 }
-#Indexes > button > i {
+#Indexes > a > button > i {
     font-size: 30px;
     margin-bottom: 20px;
 }
@@ -38,10 +39,88 @@ body {
     margin-top: 30px;
     margin-bottom: 30px;
 }
+#RoomDetail {
+    border-radius: 6px;
+    border: 1px #E9E9E9 solid;
+    height: 250px;
+    width: 80%;
+    margin: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+}
+#RoomDetail img {
+    width: 100%;
+    height: auto;
+}
+#RoomDetail div.col-8 {
+    padding: 20px;
+    height: 100%;
+}
+#RoomDetail span {
+    line-height: 30px;
+}
+#ReserveFormStep0,
+#ReserveFormStep1,
+#ReserveFormStep2 {
+    padding-bottom: 30px;
+}
+#ReserveFormStep2{
+    text-align: center;
+}
+#ReserveFormStep2 > i{
+    font-size: 80px;
+    line-height: 100px;
+}
+#ReserveFormRedo {
+    float: left;
+}
+#ReserveFormNext {
+    float: right;
+}
+#ReserveFormNext {
+    float: right;
+}
+#ResultApp {
+    text-align: center;
+    padding-bottom: 50px;
+}
+#ResultApp > i{
+    font-size: 80px;
+    line-height: 100px;
+}
+#ReservationDetail {
+    text-align: left;
+    border-radius: 6px;
+    border: 1px #E9E9E9 solid;
+    width: 80%;
+    margin: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+}
+#ReservationDetail > h1 {
+    text-align: center;
+    border-top: 1px #E9E9E9 solid;
+    padding: 20px;
+}
+#ReservationDetail label {
+    font-weight: bold;
+}
+#ReservationDetail > #RoomDetail {
+    width: 100%;
+    margin: 0px;
+    border-radius: 0px;
+    border: 0px;
+    border-bottom: 1px #E9E9E9 solid;
+    box-shadow: none;
+    margin-bottom: 20px;
+}
 .card {
     box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
     background-color: #fefefe;
     min-height: 300px;
     border-radius: 2px;
-    padding: 20px 30px 80px 30px;
+    padding: 20px 30px 30px 30px;
 }
