@@ -4,19 +4,35 @@ from django.db import models
 # 	name = models.CharField(max_length = 20)
 # 	description = models.TextField(blank = True)
 
+# CAT_NAMES = ['活动室', '创业咨询', '就业咨询', '心理咨询']
 
-class Resource(models.Model):
-	CATEGORIES = (
-		(0, '活动室'),
-		('咨询', (
-			(1, '创业'), (2, '就业'), (3, '心理')
-		))
-	)
+class Category(models.Model):
+	name = models.CharField(max_length = 10, verbose_name = '预约用途')
 
-	category = models.PositiveSmallIntegerField(choices = CATEGORIES, verbose_name = '种类')
-	name = models.CharField(max_length = 20, verbose_name = '资源名称')
+	class Meta:
+		verbose_name = "用途种类"
+		verbose_name_plural = "用途种类"
+
+	def __str__(self):
+		return self.name + '预约'
+
+
+class Department(models.Model):
+	name = models.CharField(max_length = 50, verbose_name = '院系/专业名称')
+
+	class Meta:
+		verbose_name = "院系/专业"
+		verbose_name_plural = "院系/专业"
+
+	def __str__(self):
+		return self.name
+    
+
+class Room(models.Model):
+	category = models.ManyToManyField(Category, verbose_name = '可预约用途')
+	name = models.CharField(max_length = 20, verbose_name = '房间名称')
 	location = models.CharField(max_length = 20, verbose_name = '位置')
-	capacity = models.PositiveSmallIntegerField(verbose_name = '最大容纳人数')
+	capacity = models.PositiveSmallIntegerField(verbose_name = '最大承载人数')
 	description = models.TextField(blank = True, verbose_name = '简介')
 	provider_name = models.CharField(max_length = 20, verbose_name = '负责人')
 
@@ -24,28 +40,26 @@ class Resource(models.Model):
 	#? Photo and other static resources
 
 	class Meta:
-		verbose_name = '资源'
-		verbose_name_plural = '资源'
+		verbose_name = '房间'
+		verbose_name_plural = '房间'
+
+	def __str__(self):
+		return '{} @{}'.format(self.name, self.location)
 
 
 class Reservation(models.Model):
-# parameters and data
-	DEPARTMENT_CHOICES = (
-		(0, 'A学院'),
-		(1, 'B学院')
-	)
-
-# model field definitions
 	applicant_phone = models.BigIntegerField(unique = True, verbose_name = '申请人手机号')
 	#? Foreign student name
 	applicant_name = models.CharField(max_length = 30, verbose_name = '申请人姓名')
-	applicant_department = models.PositiveSmallIntegerField(choices = DEPARTMENT_CHOICES, verbose_name = '申请人学院')
+	applicant_department = models.ForeignKey(Department, verbose_name = '申请人学院')
 	applicant_sid = models.PositiveSmallIntegerField(verbose_name = '申请人学号')
 
-	resource = models.ForeignKey('Resource')
+	room = models.ForeignKey(Room, verbose_name = '申请房间')
+	category = models.ForeignKey(Category, verbose_name = '预约种类')
 	# null for pending, True for accepted, False for rejected.
-	status = models.NullBooleanField(default = None)
-	purpose = models.TextField(max_length = 50, blank = True, verbose_name = '申请用途')
+	status = models.NullBooleanField(default = None, verbose_name = '申请通过状态')
+	people = models.PositiveSmallIntegerField(verbose_name = '使用人数')
+	purpose = models.TextField(max_length = 50, blank = True, verbose_name = '具体申请用途')
 	
 	time_begin = models.DateTimeField(verbose_name = '开始时间')
 	time_end = models.DateTimeField(verbose_name = '结束时间')
