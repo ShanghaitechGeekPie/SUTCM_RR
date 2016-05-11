@@ -12,27 +12,30 @@ class ResourcesList(View):
 	def get(self, request, category_id):
 		json_head = '{"success": 1, "resources": '
 		json_tail = '}'
-		resource_objects = serializers.serialize('json', Resource.objects.filter(category = int(category_id)))
+		if category_id > 0:
+			resource_objects = serializers.serialize('json', Resource.objects.filter(category = int(category_id)))
+		else:
+			resource_objects = serializers.serialize('json', Resource.objects.all())
 		resources_response = json_head + resource_objects + json_tail
 		return HttpResponse(resources_response)
 
 class ResourceInfo(View):
-	def get(self, request, resource_id):
+	def get(self, request, room_id):
 		try:
-			resource_object = Resource.objects.get(pk = resource_id)
-			resource_content = {
+			room_object = Room.objects.get(pk = resource_id)
+			room_content = {
 				'success': 1,
-				'category': resource_object.category,
-				'name': resource_object.name,
-				'location': resource_object.location,
-				'capacity': resource_object.capacity,
-				'description': resource_object.description,
-				'provider_name': resource_object.provider_name,
-				'open_hours': resource_object.open_hours
+				'category': room_object.category,
+				'name': room_object.name,
+				'location': room_object.location,
+				'capacity': room_object.capacity,
+				'description': room_object.description,
+				'provider_name': room_object.provider_name,
+				'open_hours': room_object.open_hours
 			}
-			return JsonResponse(resource_content)
+			return JsonResponse(room_content)
 		except Exception as e:
-			return JsonResponse({'success': 0, 'errmsg': e})
+			return JsonResponse({'success': 0, 'errmsg': str(e)})
 
 
 class TimeCheck(View):
@@ -40,10 +43,9 @@ class TimeCheck(View):
 		try:
 			time_from = datetime.datetime(year = int(yyyy), month = int(mm), day = int(dd))
 			time_to = time_from + datetime.timedelta(minutes = int(duration) * 30)
-			# [REF]https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
 
 			reservation_records = Reservation.objects.filter(
-				resource = resource_id
+				room = resource_id
 			).filter(
 				time_begin__lt = time_to
 			).filter(
@@ -54,15 +56,15 @@ class TimeCheck(View):
 
 			for record in reservation_records:
 				if record.status:
-					return JsonResponse({'time_available': 0})
+					return JsonResponse({'success': 1, 'time_available': 0})
 				else:
 					may_not_available = True
 
 			if may_not_available:
-				return JsonResponse({'time_available': 2})
-			return JsonResponse({'time_available': 1})
+				return JsonResponse({'success': 1, 'time_available': 2})
+			return JsonResponse({'success': 1, 'time_available': 1})
 		except Exception as e:
-			return JsonResponse({'success': 0, 'errmsg': e})
+			return JsonResponse({'success': 0, 'errmsg': str(e)})
 
 
 class Reserve(View):
@@ -85,15 +87,16 @@ class Reserve(View):
 			applicant_name = request.POST['applicant_name'],
 			applicant_department = int(request.POST['applicant_department']),
 			applicant_sid = int(request.POST['applicant_sid']),
-			resource = int(request.POST['resource_id']),
+			room = int(request.POST['room_id']),
 			purpose = request.POST['purpose'],
 			time_begin = request.POST['time_begin'],
-			time_end = request.POST['time_end']
+			time_end = request.POST['time_end'],
+			img = request.POST['img_src']
 		)
 		try:
 			reservation.save()
 		except Exception as e:
-			return JsonResponse({'success': 0, 'errmsg': e})
+			return JsonResponse({'success': 0, 'errmsg': str(e)})
 		return JsonResponse({'success': 1, 'reserve_sn': reserve_sn})
 
 
