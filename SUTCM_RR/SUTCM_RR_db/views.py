@@ -101,6 +101,25 @@ class Reserve(View):
 
 
 class Result(View):
-	def get(request, reserve_sn):
-		destination_reservation = Reservation.objects.get(sn = reserve_sn)[0]
-		return JsonResponse({'reservation': destination_reservation})
+	def get(self, request, reserve_sn):
+		try:
+			reservation_object = Reservation.objects.get(sn = reserve_sn)
+			reservation_content = {
+				'success': 1,
+				'applicant': {
+					'name': reservation_object.applicant_phone,
+					'department': reservation_object.applicant_department.name,
+					'sid': reservation_object.applicant_sid
+				},
+				'room': {
+					'name': reservation_object.room.name,
+					'location': reservation_object.room.location,
+				},
+				'category': reservation_object.category.name,
+				'time_from': reservation_object.time_begin,
+				'time_to': reservation_object.time_end,
+				'status': reservation_object.status
+			}
+			return JsonResponse(reservation_content)
+		except Exception as e:
+			return JsonResponse({'success': 0, 'errmsg': str(e)})
