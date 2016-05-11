@@ -22,14 +22,18 @@ class ResourcesList(View):
 class ResourceInfo(View):
 	def get(self, request, room_id):
 		try:
-			room_object = Room.objects.get(pk = resource_id)
+			room_object = Room.objects.get(pk = room_id)
 			room_content = {
 				'success': 1,
-				'category': room_object.category,
+				'id': room_object.id,
+				'category': [{
+					'id': category.id,
+					'name': category.name
+				} for category in room_object.category.all()],
 				'name': room_object.name,
 				'location': room_object.location,
 				'capacity': room_object.capacity,
-				'description': room_object.description,
+				'img': room_object.img,
 				'provider_name': room_object.provider_name,
 				'open_hours': room_object.open_hours
 			}
