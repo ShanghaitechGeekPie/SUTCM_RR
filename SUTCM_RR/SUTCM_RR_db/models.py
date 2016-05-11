@@ -26,7 +26,7 @@ class Department(models.Model):
 
 	def __str__(self):
 		return self.name
-    
+
 
 class Room(models.Model):
 	category = models.ManyToManyField(Category, verbose_name = '可预约用途')
@@ -37,7 +37,7 @@ class Room(models.Model):
 	provider_name = models.CharField(max_length = 20, verbose_name = '负责人')
 
 	open_hours = models.CharField(max_length = 50, verbose_name = '开放时间')
-	#? Photo and other static resources
+	img = models.CharField(max_length = 50, verbose_name = '照片路径')
 
 	class Meta:
 		verbose_name = '房间'
@@ -60,7 +60,7 @@ class Reservation(models.Model):
 	status = models.NullBooleanField(default = None, verbose_name = '申请通过状态')
 	people = models.PositiveSmallIntegerField(verbose_name = '使用人数')
 	purpose = models.TextField(max_length = 50, blank = True, verbose_name = '具体申请用途')
-	
+
 	time_begin = models.DateTimeField(verbose_name = '开始时间')
 	time_end = models.DateTimeField(verbose_name = '结束时间')
 

@@ -137,4 +137,8 @@ STATICFILES_DIRS = (
 # Django Suit configuration example
 SUIT_CONFIG = {
     'ADMIN_NAME': '上海中医药大学学生事务中心',
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 3393f80ce53a4b40a4d8fe7ca7e91077e4efbc62
