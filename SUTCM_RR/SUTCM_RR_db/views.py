@@ -39,13 +39,13 @@ class ResourceInfo(View):
 
 
 class TimeCheck(View):
-	def get(self, request, resource_id, yyyy, mm, dd, duration):
+	def get(self, request, room_id, yyyy, mm, dd, duration):
 		try:
 			time_from = datetime.datetime(year = int(yyyy), month = int(mm), day = int(dd))
 			time_to = time_from + datetime.timedelta(minutes = int(duration) * 30)
 
 			reservation_records = Reservation.objects.filter(
-				room = resource_id
+				room = room_id
 			).filter(
 				time_begin__lt = time_to
 			).filter(
