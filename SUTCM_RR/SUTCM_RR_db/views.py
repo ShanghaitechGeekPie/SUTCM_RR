@@ -12,10 +12,10 @@ class ResourcesList(View):
 	def get(self, request, category_id):
 		json_head = '{"success": 1, "resources": '
 		json_tail = '}'
-		if category_id > 0:
-			resource_objects = serializers.serialize('json', Resource.objects.filter(category = int(category_id)))
+		if int(category_id) > 0:
+			resource_objects = serializers.serialize('json', Room.objects.filter(category = int(category_id)))
 		else:
-			resource_objects = serializers.serialize('json', Resource.objects.all())
+			resource_objects = serializers.serialize('json', Room.objects.all())
 		resources_response = json_head + resource_objects + json_tail
 		return HttpResponse(resources_response)
 
@@ -39,9 +39,9 @@ class ResourceInfo(View):
 
 
 class TimeCheck(View):
-	def get(self, request, room_id, yyyy, mm, dd, duration):
+	def get(self, request, room_id, yyyy, mm, dd, hr, minu, sec, duration):
 		try:
-			time_from = datetime.datetime(year = int(yyyy), month = int(mm), day = int(dd))
+			time_from = datetime.datetime(year = int(yyyy), month = int(mm), day = int(dd), hour = int(hr), minute = int(minu), second = int(sec))
 			time_to = time_from + datetime.timedelta(minutes = int(duration) * 30)
 
 			reservation_records = Reservation.objects.filter(

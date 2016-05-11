@@ -24,7 +24,7 @@ urlpatterns = [
     # return: 0 - not available, 1 - available, 2 - have pending requests overlapping in time
     # time/room_id/yyyy/mm/dd/duration
     # duration: an integer x, meaning that the reservation will last 30x minutes
-    url(r'^time/(?P<room_id>\d+)/(?P<yyyy>\d{4})/(?P<mm>\d{2})/(?P<dd>\d{2})/(?P<duration>\d{1})/$', db_views.TimeCheck.as_view(), name = 'time_check'),
+    url(r'^time/(?P<room_id>\d+)/(?P<yyyy>\d{4})/(?P<mm>\d{2})/(?P<dd>\d{2})/(?P<hr>\d{2})/(?P<minu>\d{2})/(?P<sec>\d{2})/(?P<duration>\d{1})/$', db_views.TimeCheck.as_view(), name = 'time_check'),
     url(r'^reserve/$', db_views.Reserve.as_view(), name = 'reserve'),
     url(r'^result/(?P<reserve_sn>\d|\w{6})/$', db_views.Result.as_view(), name = 'result')
 ]
