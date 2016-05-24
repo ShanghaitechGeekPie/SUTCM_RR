@@ -33,7 +33,7 @@ class Room(models.Model):
 	name = models.CharField(max_length = 20, verbose_name = '房间名称')
 	location = models.CharField(max_length = 20, verbose_name = '位置')
 	capacity = models.PositiveSmallIntegerField(verbose_name = '最大承载人数')
-	description = models.TextField(blank = True, verbose_name = '简介')
+	#description = models.TextField(blank = True, verbose_name = '简介')
 	provider_name = models.CharField(max_length = 20, verbose_name = '负责人')
 
 	open_hours = models.CharField(max_length = 50, verbose_name = '开放时间')
@@ -64,7 +64,7 @@ class Reservation(models.Model):
 	time_begin = models.DateTimeField(verbose_name = '开始时间')
 	time_end = models.DateTimeField(verbose_name = '结束时间')
 
-	sn = models.CharField(unique = True, max_length = 5, verbose_name = '查询代码')
+	sn = models.CharField(unique = True, max_length = 6, verbose_name = '查询代码')
 
 	class Meta:
 		verbose_name = '预约'

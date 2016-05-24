@@ -7,18 +7,18 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('SUTCM_RR_db', '0003_auto_20160503_1712'),
+        ('SUTCM_RR_db', '0001_initial'),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='reservation',
-            name='applicant_department',
+            model_name='room',
+            name='description',
         ),
         migrations.AddField(
-            model_name='reservation',
-            name='applicant_department',
-            field=models.ForeignKey(verbose_name='申请人学院', to='SUTCM_RR_db.Department', default=0),
+            model_name='room',
+            name='img',
+            field=models.CharField(default=0, max_length=50, verbose_name='照片路径'),
             preserve_default=False,
         ),
     ]

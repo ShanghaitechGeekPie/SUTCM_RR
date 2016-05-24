@@ -16,11 +16,11 @@ admin.site.site_header = '上海中医药大学资源预约平台管理'
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # return: all rooms
-    url(r'^rooms/$', db_views.ResourcesList.as_view(), {'category_id': -1}, name = 'all_rooms'),
+    url(r'^rooms/$', db_views.RoomsList.as_view(), {'category_id': -1}, name = 'all_rooms'),
     # return: all rooms that can handle certain reservation type
-    url(r'^rooms/(?P<category_id>\d{1})/$', db_views.ResourcesList.as_view(), name = 'rooms'),
+    url(r'^rooms/(?P<category_id>\d{1})/$', db_views.RoomsList.as_view(), name = 'rooms'),
     # return: room detail
-    url(r'^room/(?P<room_id>\d+)/$', db_views.ResourceInfo.as_view(), name = 'room'),
+    url(r'^room/(?P<room_id>\d+)/$', db_views.RoomInfo.as_view(), name = 'room'),
     # return: 0 - not available, 1 - available, 2 - have pending requests overlapping in time
     # time/room_id/yyyy/mm/dd/hour/minute/second/duration
     # - duration: an integer x, meaning that the reservation will last 30x minutes

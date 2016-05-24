@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.views.generic import View
 
 from django.http import HttpResponse, JsonResponse
@@ -8,28 +10,27 @@ from .models import Category, Department, Room, Reservation
 
 import datetime
 
-class ResourcesList(View):
+class RoomsList(View):
 	def get(self, request, category_id):
 		json_head = '{"success": 1, "resources": '
 		json_tail = '}'
 		if int(category_id) > 0:
-			resource_objects = serializers.serialize('json', Room.objects.filter(category = int(category_id)))
+			room_objects = serializers.serialize('json', Room.objects.filter(category = int(category_id)))
 		else:
-			resource_objects = serializers.serialize('json', Room.objects.all())
-		resources_response = json_head + resource_objects + json_tail
-		return HttpResponse(resources_response)
+			room_objects = serializers.serialize('json', Room.objects.all())
+		rooms_response = json_head + room_objects + json_tail
+		return HttpResponse(bytes(rooms_response, "utf-8").decode("unicode_escape"), content_type='application/json')
 
-class ResourceInfo(View):
+class RoomInfo(View):
 	def get(self, request, room_id):
 		try:
-			room_object = Room.objects.get(pk = resource_id)
+			room_object = Room.objects.get(pk = room_id)
 			room_content = {
 				'success': 1,
-				'category': room_object.category,
+				'category': [category.pk for category in room_object.category.all()],
 				'name': room_object.name,
 				'location': room_object.location,
 				'capacity': room_object.capacity,
-				'description': room_object.description,
 				'provider_name': room_object.provider_name,
 				'open_hours': room_object.open_hours
 			}
