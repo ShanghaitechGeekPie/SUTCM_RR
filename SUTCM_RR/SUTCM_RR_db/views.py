@@ -27,10 +27,14 @@ class RoomInfo(View):
 			room_object = Room.objects.get(pk = room_id)
 			room_content = {
 				'success': 1,
-				'category': [category.pk for category in room_object.category.all()],
+				'category': [{
+					'pk': category.pk,
+					'name': category.name
+				} for category in room_object.category.all()],
 				'name': room_object.name,
 				'location': room_object.location,
 				'capacity': room_object.capacity,
+				'img': room_object.img,
 				'provider_name': room_object.provider_name,
 				'open_hours': room_object.open_hours
 			}
